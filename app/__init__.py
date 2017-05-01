@@ -11,6 +11,9 @@ logging.getLogger().setLevel(logging.DEBUG)
 
 app = Flask(__name__)
 app.config.from_object('config')
+
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
 db = SQLA(app)
 appbuilder = AppBuilder(app, db.session)
 
