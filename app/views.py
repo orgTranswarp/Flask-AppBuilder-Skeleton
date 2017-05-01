@@ -1,6 +1,6 @@
 from flask import render_template
 from flask.ext.appbuilder.models.sqla.interface import SQLAInterface
-from flask.ext.appbuilder import ModelView
+from flask.ext.appbuilder import ModelView, AppBuilder, expose, BaseView
 from app import appbuilder, db
 
 """
@@ -27,3 +27,20 @@ def page_not_found(e):
 db.create_all()
 
 
+class MyView(BaseView):
+    route_base = "/myview"
+
+    @expose('/method1/<string:param1>')
+    def method1(self, param1):
+        # do something with param1
+        # and return it
+        return param1
+
+    @expose('/method2/<string:param1>')
+    def method2(self, param1):
+        # do something with param1
+        # and render it
+        param1 = 'Hello %s' % (param1)
+        return param1
+
+appbuilder.add_view_no_menu(MyView())
